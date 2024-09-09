@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.special as sp
 from Gavsteh_func import calculate_gavsteh
+from matplotlib.ticker import ScalarFormatter
 
 #rD  # Raio do poço cilíndrico
 rD = 1
@@ -32,17 +33,14 @@ for cd in Cd:
 # Plotagem dos gráficos:
 plt.figure()
 cores = ['#1abc9c', '#e67e22', '#f1c40f', '#e84393', '#3498db'] # Cores para cada valor de S
+lines = []
 
 for k in range(len(pD_cd_list)):
     s_plot = pD_cd_list[k]
     for t in range(len(s_plot)):
         t_plot = s_plot[t]
-        plt.loglog(tD, t_plot, color=cores[k], linewidth=1)
-
-        # Adiciona os valores de S sobre as linhas em vermelho, similar ao exemplo fornecido
-        if cores[t] == '#3498db':  # Verifica se a cor é magenta, equivalente a 'm' no segundo exemplo
-            y_max = max(t_plot)
-            plt.text(1.5*tD[-1], y_max, f'S={S[k]}', color='#3498db', ha='left', va='bottom')
+        line, = plt.loglog(tD, t_plot, color=cores[k], linewidth=1)
+    lines.append(line)
 
 plt.xlabel('tD')
 plt.ylabel('pD')
@@ -50,5 +48,7 @@ plt.title('Modelo com Efeitos de Estocagem e Película')
 plt.xlim(10**2, 10**8)
 plt.ylim(0.1, 100)
 plt.grid(color="gray", linestyle='--')
+
+plt.legend(lines, [f'Cd={Cd[k]:.1e}' for k in range(len(Cd))])
 plt.show()
 
