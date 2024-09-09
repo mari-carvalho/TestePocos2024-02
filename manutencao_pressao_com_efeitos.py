@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.special as sp
 from Gavsteh_func import calculate_gavsteh
-from matplotlib.ticker import ScalarFormatter
 
 #rD  # Raio do poço cilíndrico
 rD = 1
@@ -11,7 +10,7 @@ reD = [100, 200 ,300 ,400 ,500 ,600 ,700 ,800 ,900 ,1000,
 l = 10 # número de coeficientes para a aproximação
  # número de pontos do intervalo do tempo
 tD = np.logspace(2,8, 40) # Array de tempo adimensionalpD = []
-Cd = [1, 10e2, 10e3, 10e4, 10e5]
+Cd = [0, 10e2, 10e3, 10e4, 10e5]
 S = [-1, 0, 5, 10, 20]
 pD_cd_list = []  # Lista para armazenar os resultados da pressão para este reD
 
@@ -42,13 +41,18 @@ for k in range(len(pD_cd_list)):
         line, = plt.loglog(tD, t_plot, color=cores[k], linewidth=1)
     lines.append(line)
 
-plt.xlabel('tD')
-plt.ylabel('pD')
-plt.title('Modelo com Efeitos de Estocagem e Película')
+    if cores[k] == '#e84393':
+        for s_index, s_value in enumerate(S):
+            plt.text(tD[-1], pD_cd_list[k][s_index][-1], f'S={s_value}', color='black', ha='left', va='bottom')
+
+plt.xlabel(r'$t_D$')
+plt.ylabel(r'$p_D$')
+plt.title('Solução Reservatório Infinito com Efeitos de Película e Estocagem')
 plt.xlim(10**2, 10**8)
 plt.ylim(0.1, 100)
 plt.grid(color="gray", linestyle='--')
 
-plt.legend(lines, [f'Cd={Cd[k]:.1e}' for k in range(len(Cd))])
+# Configura a e
+plt.legend(lines, [f'Cd={Cd[k]}' for k in range(len(Cd))])
 plt.show()
 
