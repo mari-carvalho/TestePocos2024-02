@@ -38,15 +38,14 @@ p_wd_long = [np.log(reD[0]) for _ in tD]
 fig, ax = plt.subplots()
 for k in range(len(pD)):
     ax.plot(tD, pD[k], label=f"reD = {reD[k]}")
-ax.set_xscale("log")
+ax.set_xscale("log") # para ser semilog
 ax.set_ylim(3, 9)
 ax.grid(color="gray", linestyle='--')
 ax.plot(tD, p_wd_short, label='Solução de Tempos Curtos', color='mediumvioletred', linestyle='--', linewidth='3')
 ax.plot(tD, p_wd_long, label='Solução de Tempos Longos', color='aqua', linestyle='--', linewidth='3')
-plt.xlabel('pD')
-plt.ylabel('tD')
+plt.xlabel(r'$t_D$')
+plt.ylabel(r'$p_D$')
 plt.title(f"Solução Reservatório com Manutenção de Pressão e Poço Cilíndrico")
 plt.legend(framealpha=1, loc='upper left', fontsize=7)
-plt.yticks(np.arange(3, 9, step=0.25))
 plt.show()
 
