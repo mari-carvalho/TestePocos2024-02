@@ -61,7 +61,7 @@ for i in range(len(delta_t)):
     if i == 0:
         eixo_x = None
     else:
-        eixo_x = (tp+delta_t[i])/delta_t[i]
+        eixo_x = (tp*delta_t[i])/(tp+delta_t[i])
     list_eixo_x.append(eixo_x)
 
 print('x', list_eixo_x)
@@ -74,10 +74,11 @@ for j in range(len(list_eixo_x)):
     list_log_eixo_x.append(log_eixo_x)
 print('log', list_log_eixo_x)
 
-plt.semilogx(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label='pws vs log(tp+delta t)/delta t')
-plt.xlabel('log(tp+delta t)/delta t')
+plt.plot(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label='pws vs log(tp*delta t)/(tp+delta t)')
+plt.xscale('symlog', linthresh=1)
+plt.xlabel('log(tp*delta t)/(tp+delta t)')
 plt.ylabel('pws [ psia]')
-plt.title('Gráfico de Pws vs. log(tp+delta t)/delta t')
+plt.title('Gráfico de Pws vs. log(tp*delta t)/(tp+delta t)')
 plt.legend()
 plt.show()
 
@@ -101,10 +102,10 @@ print('Coeficiente Angular:', coef_angular)
 tendencia = np.poly1d(coeffs)
 x_tendencia = np.linspace(min(list_selecao), max(list_selecao), 100)
 plt.plot(x_tendencia, tendencia(x_tendencia), color='green', linestyle='dashed', label='Linha de Tendência Linear')
-plt.semilogx(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label='pws vs delta_t')
+plt.semilogx(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label='pws vs log(tp*delta t)/(tp+delta t)')
 plt.title('Linearização com Linha de Tendência')
 plt.legend()
-plt.xlabel('log(tp+delta t)/delta t')
+plt.xlabel('log(tp*delta t)/(tp+delta t)')
 plt.ylabel('pws [ psia]')
 plt.show()
 
@@ -134,7 +135,4 @@ print('delta_ps', delta_ps)
 
 rwa = rw*np.exp(-s)
 print('rwa', rwa)
-
-
-
 

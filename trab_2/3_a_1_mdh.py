@@ -56,28 +56,15 @@ plt.title('Gráfico de Pws vs. Delta t')
 plt.legend()
 plt.show()
 
-list_eixo_x = []
-for i in range(len(delta_t)):
-    if i == 0:
-        eixo_x = None
-    else:
-        eixo_x = (tp+delta_t[i])/delta_t[i]
-    list_eixo_x.append(eixo_x)
-
-print('x', list_eixo_x)
-list_log_eixo_x = []
-for j in range(len(list_eixo_x)):
-    if j == 0:
-        log_eixo_x = None
-    else:
-        log_eixo_x = np.log10(list_eixo_x[j])
-    list_log_eixo_x.append(log_eixo_x)
+list_log_eixo_x = np.log10(delta_t)
 print('log', list_log_eixo_x)
+print('pws', pws)
 
-plt.semilogx(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label='pws vs log(tp+delta t)/delta t')
-plt.xlabel('log(tp+delta t)/delta t')
+plt.plot(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label='pws vs log(delta_t)')
+plt.xscale('symlog', linthresh=1)
+plt.xlabel('log(delta t)')
 plt.ylabel('pws [ psia]')
-plt.title('Gráfico de Pws vs. log(tp+delta t)/delta t')
+plt.title('Gráfico de Pws vs. log(delta t)')
 plt.legend()
 plt.show()
 
@@ -134,7 +121,4 @@ print('delta_ps', delta_ps)
 
 rwa = rw*np.exp(-s)
 print('rwa', rwa)
-
-
-
 
