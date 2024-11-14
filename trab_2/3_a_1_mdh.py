@@ -56,7 +56,13 @@ plt.title('Gráfico de Pws vs. Delta t')
 plt.legend()
 plt.show()
 
-list_log_eixo_x = np.log10(delta_t)
+list_log_eixo_x = []
+for i in range(len(delta_t)):
+    if i == 0:
+        eixo_x = None
+    else:
+        eixo_x = np.log10(delta_t[i])
+    list_log_eixo_x.append(eixo_x)
 print('log', list_log_eixo_x)
 print('pws', pws)
 
@@ -68,16 +74,15 @@ plt.title('Gráfico de Pws vs. log(delta t)')
 plt.legend()
 plt.show()
 
-list_selecao = [3.3383165606427383, 3.280374969309826, 3.229131766038914, 3.18342997459474, 3.1420880340640776,
-                3.1043465011785, 3.069628563365754, 3.0374858011231862, 3.0074810313596214, 2.979496076128383,
-                2.953209101200769, 2.928425977077723, 2.8937222453428144, 2.8615353746314502, 2.8316303666172913,
-                2.80365790832937, 2.777383628180919, 2.7525680271946484, 2.729141510610315, 2.7069184961390156,
-                2.685781548937826, 2.665592547345194, 2.646339696765017, 2.6279077839194995, 2.593215238796854,
-                2.56113146117999, 2.531239861546053, 2.503309914208929]
+list_selecao = [-0.6057234732321786, -0.5477534254795628, -0.4964816872759253, -0.45075144314594406, -0.4093810517934221,
+                -0.37161106994968846, -0.3368646850422458, -0.30469347756819737, -0.2746601840902628, -0.24664678735850398,
+                -0.22033137279285203, -0.19551981089400725, -0.16077342598656458, -0.1285438259770462, -0.09859617317474817,
+                -0.07058107428570728, -0.044264157722334184, -0.01940584422377982, 0.004063300397667094, 0.02632893872234915,
+                0.04750850559401222, 0.06774020292624038, 0.08703566480566013, 0.10551018476997394]
 print(len(list_selecao))
-pws_selecao = [2951.60, 2970.66, 2987.87, 3006.01, 3022.46, 3036.49, 3051.08, 3065.68, 3080.63, 3091.29, 3104.95, 3116.73,
-               3125.52, 3144.23, 3158.26, 3170.42, 3184.07, 3194.93, 3207.47, 3218.31, 3228.62, 3235.90, 3244.89,
-               3253.49, 3260.61, 3274.46, 3284.39, 3294.70]
+pws_selecao = [2970.66, 2987.87, 3006.01, 3022.46, 3036.49, 3051.08, 3065.68, 3080.63,
+    3091.29, 3104.95, 3116.73, 3125.52, 3144.23, 3158.26, 3170.42, 3184.07, 3194.93,
+    3207.47, 3218.31, 3228.62, 3235.90, 3244.89, 3253.49, 3260.61]
 print(len(pws_selecao))
 
 # ajustando uma linha de tendência no gráfico semilog:
@@ -88,7 +93,8 @@ print('Coeficiente Angular:', coef_angular)
 tendencia = np.poly1d(coeffs)
 x_tendencia = np.linspace(min(list_selecao), max(list_selecao), 100)
 plt.plot(x_tendencia, tendencia(x_tendencia), color='green', linestyle='dashed', label='Linha de Tendência Linear')
-plt.semilogx(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label='pws vs delta_t')
+plt.plot(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label='pws vs delta_t')
+plt.xscale('symlog', linthresh=1)
 plt.title('Linearização com Linha de Tendência')
 plt.legend()
 plt.xlabel('log(tp+delta t)/delta t')
