@@ -49,10 +49,10 @@ pws = [
     3406.62, 3407.52, 3407.90, 3409.71, 3410.10, 3411.42, 3411.83, 3412.83, 3413.25
 ]
 
-plt.plot(delta_t, pws, marker='o', linestyle='', color='#D5006D', label='pws vs delta_t')
-plt.xlabel('delta_t [hrs]')
-plt.ylabel('pws [ psia]')
-plt.title('Gráfico de Pws vs. Delta t')
+plt.plot(delta_t, pws, marker='o', linestyle='', color='#D5006D', label=r'$p_{ws}$ vs. $\Delta t$')
+plt.xlabel(r'$\Delta t$ [h]')
+plt.ylabel(r'$p_{ws}$ [psia]')
+plt.title(r'Gráfico de $p_{ws}$ vs. $\Delta t$')
 plt.legend()
 plt.show()
 
@@ -74,11 +74,11 @@ for j in range(len(list_eixo_x)):
     list_log_eixo_x.append(log_eixo_x)
 print('log', list_log_eixo_x)
 
-plt.plot(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label='pws vs log(tp*delta t)/(tp+delta t)')
+plt.plot(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_p \cdot \Delta t}{t_p + \Delta t}\right)$')
 plt.xscale('symlog', linthresh=1)
-plt.xlabel('log(tp*delta t)/(tp+delta t)')
-plt.ylabel('pws [ psia]')
-plt.title('Gráfico de Pws vs. log(tp*delta t)/(tp+delta t)')
+plt.xlabel(r'$\log\left(\frac{t_p \cdot \Delta t}{t_p + \Delta t}\right)$')
+plt.ylabel(r'$p_{ws}$ [psia]')
+plt.title(r'Gráfico de $p_{ws}$ vs. $\log\left(\frac{t_p \cdot \Delta t}{t_p + \Delta t}\right)$')
 plt.legend()
 plt.show()
 
@@ -101,12 +101,12 @@ print('Coeficiente Angular:', coef_angular)
 tendencia = np.poly1d(coeffs)
 x_tendencia = np.linspace(min(list_selecao), max(list_selecao), 100)
 plt.plot(x_tendencia, tendencia(x_tendencia), color='green', linestyle='dashed', label='Linha de Tendência Linear')
-plt.plot(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label='pws vs log(tp*delta t)/(tp+delta t)')
+plt.plot(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_p \cdot \Delta t}{t_p + \Delta t}\right)$')
 plt.xscale('symlog', linthresh=1)
 plt.title('Linearização com Linha de Tendência')
 plt.legend()
-plt.xlabel('log(tp*delta t)/(tp+delta t)')
-plt.ylabel('pws [ psia]')
+plt.xlabel(r'$\log\left(\frac{t_p \cdot \Delta t}{t_p + \Delta t}\right)$')
+plt.ylabel(r'$p_{ws}$ [psia]')
 plt.show()
 
 # cálculo da permeabilidade:

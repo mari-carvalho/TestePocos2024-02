@@ -21,10 +21,10 @@ pws = [3605, 3632, 3795, 3960, 4230, 4320, 4370, 4390, 4395, 4410, 4422]
 
 delta_te = [2026.60, 1013.80, 507.40, 338.60, 254.20, 169.80, 127.60, 73.34, 51.64, 34.76, 22.10]
 
-plt.plot(delta_t, pws, marker='o', linestyle='', color='#D5006D', label='pws vs delta t')
-plt.xlabel('delta t')
-plt.ylabel('pws [psia]')
-plt.title('Gráfico de Pws vs. delta t')
+plt.plot(delta_t, pws, marker='o', linestyle='', color='#D5006D', label=r'$p_{ws}$ vs. $\Delta t$')
+plt.xlabel(r'$\Delta t$ [h]')
+plt.ylabel(r'$p_{ws}$ [psia]')
+plt.title(r'$P_{ws}$ vs. $\Delta t$')
 plt.legend()
 plt.show()
 
@@ -35,10 +35,10 @@ print('tpH', tpH)
 list_log_eixo_x = np.log10(delta_te)
 print('log', list_log_eixo_x)
 
-plt.semilogx(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label='pws vs log(tpH+delta t)/delta t')
-plt.xlabel('log(tpH+delta t)/delta t')
-plt.ylabel('pws [psia]')
-plt.title('Gráfico de Pws vs. log(tpH+delta t)/delta t')
+plt.semilogx(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
+plt.xlabel(r'$\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
+plt.ylabel(r'$p_{ws}$ [psia]')
+plt.title(r'Gráfico de $p_{ws}$ vs. $\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
 plt.legend()
 plt.show()
 
@@ -55,11 +55,11 @@ print('Coeficiente Angular:', coef_angular)
 tendencia = np.poly1d(coeffs)
 x_tendencia = np.linspace(min(list_selecao), max(list_selecao), 100)
 plt.plot(x_tendencia, tendencia(x_tendencia), color='green', linestyle='dashed', label='Linha de Tendência Linear')
-plt.semilogx(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label='pws vs delta_t')
+plt.semilogx(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
 plt.title('Linearização com Linha de Tendência')
 plt.legend()
-plt.xlabel('log(tp+delta t)/delta t')
-plt.ylabel('pws [ psia]')
+plt.xlabel(r'$\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
+plt.ylabel(r'$p_{ws}$ [psia]')
 plt.show()
 
 # cálculo da permeabilidade:
