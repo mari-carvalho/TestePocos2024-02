@@ -4,6 +4,7 @@ import math as mt
 import pandas as pd
 import scipy.special as sp
 from Gavsteh_func import calculate_gavsteh
+from gringbourdet_deriv import *
 
 # informações da formação:
 
@@ -17,6 +18,7 @@ rw = 0.50 # ft
 pwf = 2820 # psia
 tp = 540 #hrs
 c2_americano = 141.2
+c1_americano = 0.0002637
 
 # Δt (hrs) - Coluna 1
 delta_t = [
@@ -56,12 +58,33 @@ for i in range(len(pws)):
     delta_p = pws[i] - pwf
     list_delta_p.append(delta_p)
 
+derivate_p = []
+for i in range(len(delta_t)):
+    if i == 0:
+        p1 = abs(pws[i] - pwf)
+        t1 = abs(np.log(delta_t[i]))
+        p2 = abs(pws[i+1]-pws[i])
+        t2 = abs(np.log(delta_t[i+1]) - np.log(delta_t[i]))
+        derivate_p.append(((p1/t1)*t2 + (p2/t2)*t1)/(t1+t2))
+    elif i == len(delta_t) - 1:
+        p1 = abs(pws[i] - pws[i-1])
+        t1 = abs(np.log(delta_t[i]) - np.log(delta_t[i-1]))
+        p2 = abs(pws[i])
+        t2 = abs(np.log(delta_t[i]))
+        derivate_p.append(((p1/t1)*t2 + (p2/t2)*t1)/(t1+t2))
+    else:
+        p1 = abs(pws[i] - pws[i-1])
+        t1 = abs(np.log(delta_t[i]) - np.log(delta_t[i-1]))
+        p2 = abs(pws[i+1] - pws[i])
+        t2 = abs(np.log(delta_t[i+1]) - np.log(delta_t[i]))
+        derivate_p.append(((p1/t1)*t2 + (p2/t2)*t1)/(t1+t2))
+
+print('derivative_p', derivate_p)
 print('log delta p', list_delta_p)
-print(len(list_delta_p))
-print(len(delta_t))
 
 list_log_delta_p = []
 list_log_delta_t = []
+list_log_derivative_p = []
 for i in range(len(list_delta_p)):
     if i == 0:
         delta_p_log = None
@@ -71,73 +94,91 @@ for i in range(len(list_delta_p)):
         delta_t_log = np.log10(delta_t[i])
     list_log_delta_t.append(delta_t_log)
     list_log_delta_p.append(delta_p_log)
+for i in range(len(derivate_p)):
+    if i == 0 or i == 1:
+        derivate_p_log = None
+    else:
+        derivate_p_log = np.log10(derivate_p[i])
+    list_log_derivative_p.append(derivate_p_log)
+print('list_log_derivative_p', list_log_derivative_p)
 
-plt.plot(list_log_delta_t, list_log_delta_p, marker='o', linestyle='', color='#D5006D', label=r'$\log(\Delta p)$ vs. $\log(\Delta t)$')
+plt.plot(list_log_delta_t, list_log_delta_p, marker='o', markersize=2, linestyle='', color='#D5006D', label=r'$\log(\Delta p)$ vs. $\log(\Delta t)$')
+plt.plot(list_log_delta_t, list_log_derivative_p, marker='o', markersize=2, linestyle='', color='#00FF00', label=r'$\log(\Delta p)$')
 plt.xlabel(r'$\log(\Delta t) [hrs]$')
 plt.ylabel(r'$\log(\Delta p) [psia]$')
 plt.title(r'Gráfico $\log(\Delta p)$ vs. $\log(\Delta t)$')
 plt.legend()
 plt.show()
 
-C = 0.04165*q*Bo*(delta_t[6]/list_delta_p[6])
-print('C', C)
-Cd = (0.894*C) / (phi*ct*h*(rw**2))
-print('Cd', Cd)
 
 l = 10 # número de coeficientes para a aproximação
  # número de pontos do intervalo do tempo
-tD = np.linspace(1e2, 1e7, 10000)
-S = [-1, 0, 5, 10, 20]
+tD = np.linspace(1e-1, 1e4, 10000)
+CDe2s = [1e4, 1e6, 1e8, 1e10, 1e15]
 pD_cd_list = []  # Lista para armazenar os resultados da pressão para este reD
 rD = 1
+ceuler = 0.5772
 
-pD_s_list = []
+pD_Cd_list = []
 #  Solução
-for s in S:
-    pD_s = []
+for j in CDe2s:
+    pD_Cd = []
     for i in tD:
         # Função de pressão func(u) que será avaliada para cada tempo adimensional:
-        func = lambda u: (
-                (sp.k0(rD * np.sqrt(u)) + s * np.sqrt(u) * sp.k1(np.sqrt(u))) / (
-                u * (np.sqrt(u) * sp.k1(np.sqrt(u)) + Cd * u * (sp.k0(np.sqrt(u)) + s * np.sqrt(u) * sp.k1(np.sqrt(u)))))) # equação do slide 27
+        func = lambda u: (1/(u*(1/(0.5*np.log(4*j/(np.exp(ceuler**2)*u)))+u))) # equação do slide 27
         # Chama a função gavsteh_param para calcular a pressão adimensional:
-        pD_s.append(calculate_gavsteh.gavsteh_param(l, func, i))
-    pD_s_list.append(pD_s)
-#print('pD_s_list', pD_s_list)
+        pD_Cd.append(calculate_gavsteh.gavsteh_param(l, func, i))
+    pD_Cd_list.append(pD_Cd)
+print('pD_Cd_list', pD_Cd_list)
+
+derivative_GringBourdet = deriv_bourdet(pD_Cd_list, CDe2s, tD)
+
 # Plotagem dos gráficos:
 plt.figure()
 cores = ['#1abc9c', '#e67e22', '#f1c40f', '#e84393', '#3498db'] # Cores para cada valor de S
 lines = []
 
-for t in range(len(S)):
-    line, = plt.loglog(tD, pD_s_list[t], color=cores[t], linewidth=1, label=f'S = {S[t]}')
-lines.append(line)
-
-plt.legend()
+for t in range(len(CDe2s)):
+    plt.plot(tD, pD_Cd_list[t], color=cores[t], linewidth=1, label=f'CDe2s = {CDe2s[t]}')
+    plt.plot(tD[:-1], derivative_GringBourdet[t], color=cores[t], linestyle='--')
+    plt.legend()
 plt.xlabel(r'$t_D$/$C_D$')
-plt.ylabel(r'$p_D$')
+plt.ylabel(r'$p_D$ and $p_D(t_D/C_D)$')
 plt.title('Solução Reservatório Infinito com Efeitos de Película e Estocagem')
-plt.xlim(9*10**1, 10**7)
-plt.ylim(0.2, 100)
+#plt.xlim(9*10**1, 10**7)
+#plt.ylim(0.2, 100)
 plt.grid(color="gray", linestyle='--')
 
 # translação:
 list_delta_t_ajus = []
 list_delta_p_ajus = []
+list_derivative_p_ajus = []
 for i in delta_t:
-    delta_t_ajust = i*10**3.7
+    delta_t_ajust = i*16
     list_delta_t_ajus.append(delta_t_ajust)
 for i in list_delta_p:
-    delta_p_ajus = i*0.020
+    delta_p_ajus = i*0.02
     list_delta_p_ajus.append(delta_p_ajus)
+for i in derivate_p:
+    derivate_p_ajus = i* 0.02
+    list_derivative_p_ajus.append(derivate_p_ajus)
 
 plt.plot(list_delta_t_ajus, list_delta_p_ajus, marker='o', markersize=2, linestyle='', color='#D5006D')
+plt.plot(list_delta_t_ajus, list_derivative_p_ajus, marker='o', markersize=2, linestyle='', color='#89CFF0')
 plt.xscale('log',)
 plt.yscale('log')
 plt.show()
 
+delta_t_match = delta_t[-1]
+tD_Cd_match = delta_t_match*16
 delta_p_match = list_delta_p[-1]
-pd_match = delta_p_match*0.020
+pD_match = delta_p_match*0.02
 
-k = ((c2_americano*Bo*mi_o*q)/h) * (pd_match/delta_p_match)
+k = ((c2_americano*Bo*mi_o*q)/h) * (pD_match/delta_p_match)
 print('k', k)
+
+Cd = (c1_americano*k)/(phi*mi_o*ct*(rw**2)) * (delta_t_match/tD_Cd_match)
+print('Cd', Cd)
+
+s = 0.5 * np.log(1e8/Cd)
+print('s', s)
