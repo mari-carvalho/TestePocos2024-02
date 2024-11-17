@@ -142,9 +142,9 @@ plt.yscale('log')
 plt.show()
 
 delta_t_match = delta_t[10]
-tD_Cd_match = delta_t_match*25
+tD_Cd_match = delta_t_match*155
 delta_p_match = list_delta_p[10]
-pD_match = delta_p_match*0.01
+pD_match = delta_p_match*0.017
 
 k = -((c2_americano*B_w*mi_w*-qw)/h) * (pD_match/delta_p_match)
 print('k', k)
