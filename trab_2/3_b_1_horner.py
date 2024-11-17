@@ -27,8 +27,8 @@ pws = [3500, 3470, 3442, 3397,3362, 3317, 3282,
        3075, 3042, 3007, 2982, 2972, 2962]
 
 plt.plot(delta_t, pws, marker='o', linestyle='', color='#D5006D', label=r'$p_{ws}$ vs. $\Delta t$')
-plt.xlabel(r'$\Delta t$ [h]')
-plt.ylabel(r'$p_{ws}$ [psia]')
+plt.xlabel(r'$\Delta t$')
+plt.ylabel(r'$p_{ws}$')
 plt.title(r'$P_{ws}$ vs. $\Delta t$')
 plt.legend()
 plt.show()
@@ -47,7 +47,7 @@ print('log', list_log_eixo_x)
 
 plt.semilogx(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_{inj} + \Delta t}{\Delta t}\right)$')
 plt.xlabel(r'$\log\left(\frac{t_{inj} + \Delta t}{\Delta t}\right)$')
-plt.ylabel(r'$p_{ws}$ [psia]')
+plt.ylabel(r'$p_{ws}$')
 plt.title(r'Gráfico de $p_{ws}$ vs. $\log\left(\frac{t_{inj} + \Delta t}{\Delta t}\right)$')
 plt.legend()
 plt.show()
@@ -69,7 +69,7 @@ plt.semilogx(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF
 plt.title('Linearização com Linha de Tendência')
 plt.legend()
 plt.xlabel(r'$\log\left(\frac{t_{inj} + \Delta t}{\Delta t}\right)$')
-plt.ylabel(r'$p_{ws}$ [psia]')
+plt.ylabel(r'$p_{ws}$]')
 plt.show()
 
 # cálculo da permeabilidade:

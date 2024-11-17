@@ -73,8 +73,8 @@ for i in range(len(list_delta_p)):
     list_log_delta_p.append(delta_p_log)
 
 plt.plot(list_log_delta_t, list_log_delta_p, marker='o', linestyle='', color='#D5006D', label=r'$\log(\Delta p)$ vs. $\log(\Delta t)$')
-plt.xlabel(r'$\log(\Delta t) [hrs]$')
-plt.ylabel(r'$\log(\Delta p) [psia]$')
+plt.xlabel(r'$\log(\Delta t)$')
+plt.ylabel(r'$\log(\Delta p)$')
 plt.title(r'Gráfico $\log(\Delta p)$ vs. $\log(\Delta t)$')
 plt.legend()
 plt.show()
@@ -110,7 +110,7 @@ cores = ['#1abc9c', '#e67e22', '#f1c40f', '#e84393', '#3498db'] # Cores para cad
 lines = []
 
 for t in range(len(S)):
-    line, = plt.loglog(tD, pD_s_list[t], color=cores[t], linewidth=1, label=f'S = {S[t]}')
+    line, = plt.plot(tD, pD_s_list[t], color=cores[t], linewidth=1, label=f'S = {S[t]}')
 lines.append(line)
 
 plt.legend()
@@ -136,7 +136,7 @@ plt.xscale('log',)
 plt.yscale('log')
 plt.show()
 
-delta_p_match = list_delta_p[-1]
+delta_p_match = list_delta_p[20]
 pd_match = delta_p_match*0.020
 
 k = ((c2_americano*Bo*mi_o*q)/h) * (pd_match/delta_p_match)

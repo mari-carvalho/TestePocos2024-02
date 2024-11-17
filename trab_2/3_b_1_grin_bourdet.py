@@ -11,7 +11,7 @@ from gringbourdet_deriv import *
 c1_americano = 0.0002637
 tinj = 240 #hrs
 qw = 807 # STB/D
-pwf = 2788 #psia
+pwf = 3582 #psia
 mi_w = 1 # cp
 B_w = 1 # RB/STB
 ct = 1.18*10**-5 # psia^-1
@@ -34,7 +34,7 @@ pws = [3500, 3470, 3442, 3397,3362, 3317, 3282,
 
 list_delta_p = []
 for i in range(len(pws)):
-    delta_p = pws[i] - pwf
+    delta_p = pwf - pws[i]
     list_delta_p.append(delta_p)
 print('delta_p', list_delta_p)
 
@@ -76,8 +76,8 @@ print('list_log_delta_p', list_log_delta_p)
 
 plt.plot(list_log_delta_t, list_log_delta_p, marker='o', markersize=2, linestyle='', color='#D5006D', label=r'$\log(\Delta p)$ vs. $\log(\Delta t)$')
 plt.plot(list_log_delta_t, list_log_derivative_p, marker='o', markersize=2, linestyle='', color='#00FF00', label=r'$\log(\Delta p)$')
-plt.xlabel(r'$\log(\Delta t) [hrs]$')
-plt.ylabel(r'$\log(\Delta p) [psia]$')
+plt.xlabel(r'$\log(\Delta t)$')
+plt.ylabel(r'$\log(\Delta p)$')
 plt.title(r'Gráfico $\log(\Delta p)$ vs. $\log(\Delta t)$')
 plt.legend()
 plt.show()
@@ -126,13 +126,13 @@ list_delta_t_ajus = []
 list_delta_p_ajus = []
 list_derivative_p_ajus = []
 for i in delta_t:
-    delta_t_ajust = i*25
+    delta_t_ajust = i*155
     list_delta_t_ajus.append(delta_t_ajust)
 for i in list_delta_p:
-    delta_p_ajus = i*0.01
+    delta_p_ajus = i*0.017
     list_delta_p_ajus.append(delta_p_ajus)
 for i in derivate_p:
-    derivate_p_ajus = i* 0.01
+    derivate_p_ajus = i* 0.017
     list_derivative_p_ajus.append(derivate_p_ajus)
 
 plt.plot(list_delta_t_ajus, list_delta_p_ajus, marker='o', markersize=2, linestyle='', color='#D5006D')
@@ -141,10 +141,10 @@ plt.xscale('log',)
 plt.yscale('log')
 plt.show()
 
-delta_t_match = delta_t[-1]
-tD_Cd_match = delta_t_match*16
-delta_p_match = list_delta_p[-1]
-pD_match = delta_p_match*0.02
+delta_t_match = delta_t[10]
+tD_Cd_match = delta_t_match*25
+delta_p_match = list_delta_p[10]
+pD_match = delta_p_match*0.01
 
 k = -((c2_americano*B_w*mi_w*-qw)/h) * (pD_match/delta_p_match)
 print('k', k)

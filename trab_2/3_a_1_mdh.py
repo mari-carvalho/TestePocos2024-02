@@ -50,8 +50,8 @@ pws = [
 ]
 
 plt.plot(delta_t, pws, marker='o', linestyle='', color='#D5006D', label=r'$p_{ws}$ vs. $\Delta t$')
-plt.xlabel(r'$\Delta t$ [h]')
-plt.ylabel(r'$p_{ws}$ [psia]')
+plt.xlabel(r'$\Delta t$')
+plt.ylabel(r'$p_{ws}$')
 plt.title(r'Gráfico de $p_{ws}$ vs. $\Delta t$')
 plt.legend()
 plt.show()
@@ -69,7 +69,7 @@ print('pws', pws)
 plt.plot(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log(\Delta t)$')
 plt.xscale('symlog', linthresh=1)
 plt.xlabel(r'$\log(\Delta t)$')
-plt.ylabel(r'$p_{ws}$ [psia]')
+plt.ylabel(r'$p_{ws}$')
 plt.title(r'Gráfico de $p_{ws}$ vs. $\log(\Delta t)$')
 plt.legend()
 plt.show()
@@ -98,7 +98,7 @@ plt.xscale('symlog', linthresh=1)
 plt.title('Linearização com Linha de Tendência')
 plt.legend()
 plt.xlabel(r'$\log(\Delta t)$')
-plt.ylabel(r'$p_{ws}$ [psia]')
+plt.ylabel(r'$p_{ws}$')
 plt.show()
 
 # cálculo da permeabilidade:

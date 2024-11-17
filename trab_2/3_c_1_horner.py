@@ -22,8 +22,8 @@ pws = [3605, 3632, 3795, 3960, 4230, 4320, 4370, 4390, 4395, 4410, 4422]
 delta_te = [2026.60, 1013.80, 507.40, 338.60, 254.20, 169.80, 127.60, 73.34, 51.64, 34.76, 22.10]
 
 plt.plot(delta_t, pws, marker='o', linestyle='', color='#D5006D', label=r'$p_{ws}$ vs. $\Delta t$')
-plt.xlabel(r'$\Delta t$ [h]')
-plt.ylabel(r'$p_{ws}$ [psia]')
+plt.xlabel(r'$\Delta t$')
+plt.ylabel(r'$p_{ws}$')
 plt.title(r'$P_{ws}$ vs. $\Delta t$')
 plt.legend()
 plt.show()
@@ -37,14 +37,14 @@ print('log', list_log_eixo_x)
 
 plt.semilogx(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
 plt.xlabel(r'$\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
-plt.ylabel(r'$p_{ws}$ [psia]')
+plt.ylabel(r'$p_{ws}$')
 plt.title(r'Gráfico de $p_{ws}$ vs. $\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
 plt.legend()
 plt.show()
 
-list_selecao = [2.40517555, 2.22993769, 2.10585067]
+list_selecao = [2.10585067, 1.86534091, 1.71298623, 1.54107977, 1.34439227]
 print(len(list_selecao))
-pws_selecao = [4230, 4320, 4370]
+pws_selecao = [4370, 4390, 4395, 4410, 4422]
 print(len(pws_selecao))
 
 # ajustando uma linha de tendência no gráfico semilog:
@@ -59,12 +59,12 @@ plt.semilogx(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF
 plt.title('Linearização com Linha de Tendência')
 plt.legend()
 plt.xlabel(r'$\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
-plt.ylabel(r'$p_{ws}$ [psia]')
+plt.ylabel(r'$p_{ws}$')
 plt.show()
 
 # cálculo da permeabilidade:
 
-k = -1.151 * (c2_americano*500*B_o*mi_o)/(abs(coef_angular)*h)
+k = 1.151 * (c2_americano*500*B_o*mi_o)/(abs(coef_angular)*h)
 print('permeabilidade', k)
 
 # cálculo do fator de película:

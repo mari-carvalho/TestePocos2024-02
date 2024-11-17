@@ -103,13 +103,12 @@ for i in range(len(derivate_p)):
 print('list_log_derivative_p', list_log_derivative_p)
 
 plt.plot(list_log_delta_t, list_log_delta_p, marker='o', markersize=2, linestyle='', color='#D5006D', label=r'$\log(\Delta p)$ vs. $\log(\Delta t)$')
-plt.plot(list_log_delta_t, list_log_derivative_p, marker='o', markersize=2, linestyle='', color='#00FF00', label=r'$\log(\Delta p)$')
-plt.xlabel(r'$\log(\Delta t) [hrs]$')
-plt.ylabel(r'$\log(\Delta p) [psia]$')
-plt.title(r'Gráfico $\log(\Delta p)$ vs. $\log(\Delta t)$')
+plt.plot(list_log_delta_t, list_log_derivative_p, marker='o', markersize=2, linestyle='', color='#00FF00', label=r'$\log(pws^{prime})$')
+plt.xlabel(r'$\log(\Delta t)$')
+plt.ylabel(r'$\log(\Delta p) \, $ e $\log(pws^{\prime})$')
+plt.title(r'Gráfico $\log(\Delta p)$ e $\log(pws^{\prime})$ vs. $\log(\Delta t)$')
 plt.legend()
 plt.show()
-
 
 l = 10 # número de coeficientes para a aproximação
  # número de pontos do intervalo do tempo
@@ -143,7 +142,7 @@ for t in range(len(CDe2s)):
     plt.plot(tD[:-1], derivative_GringBourdet[t], color=cores[t], linestyle='--')
     plt.legend()
 plt.xlabel(r'$t_D$/$C_D$')
-plt.ylabel(r'$p_D$ and $p_D(t_D/C_D)$')
+plt.ylabel(r'$p_D$ and $p_D^{\prime},(t_D/C_D)$')
 plt.title('Solução Reservatório Infinito com Efeitos de Película e Estocagem')
 #plt.xlim(9*10**1, 10**7)
 #plt.ylim(0.2, 100)
@@ -154,13 +153,13 @@ list_delta_t_ajus = []
 list_delta_p_ajus = []
 list_derivative_p_ajus = []
 for i in delta_t:
-    delta_t_ajust = i*16
+    delta_t_ajust = i*16.8
     list_delta_t_ajus.append(delta_t_ajust)
 for i in list_delta_p:
-    delta_p_ajus = i*0.02
+    delta_p_ajus = i*0.024
     list_delta_p_ajus.append(delta_p_ajus)
 for i in derivate_p:
-    derivate_p_ajus = i* 0.02
+    derivate_p_ajus = i* 0.024
     list_derivative_p_ajus.append(derivate_p_ajus)
 
 plt.plot(list_delta_t_ajus, list_delta_p_ajus, marker='o', markersize=2, linestyle='', color='#D5006D')
@@ -169,10 +168,10 @@ plt.xscale('log',)
 plt.yscale('log')
 plt.show()
 
-delta_t_match = delta_t[-1]
-tD_Cd_match = delta_t_match*16
-delta_p_match = list_delta_p[-1]
-pD_match = delta_p_match*0.02
+delta_t_match = delta_t[20]
+tD_Cd_match = delta_t_match*16.8
+delta_p_match = list_delta_p[20]
+pD_match = delta_p_match*0.024
 
 k = ((c2_americano*Bo*mi_o*q)/h) * (pD_match/delta_p_match)
 print('k', k)
@@ -180,5 +179,5 @@ print('k', k)
 Cd = (c1_americano*k)/(phi*mi_o*ct*(rw**2)) * (delta_t_match/tD_Cd_match)
 print('Cd', Cd)
 
-s = 0.5 * np.log(1e8/Cd)
+s = 0.5 * np.log(1e10/Cd)
 print('s', s)
