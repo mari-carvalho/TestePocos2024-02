@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import math as mt
-import pandas as pd
+
 
 pwf = 3535 #psia
 mi_o = 0.75 # cp
@@ -53,9 +52,9 @@ coeffs = np.polyfit(list_selecao, pws_selecao, grau)
 coef_angular = coeffs[0]
 print('Coeficiente Angular:', coef_angular)
 tendencia = np.poly1d(coeffs)
-x_tendencia = np.linspace(min(list_selecao), max(list_selecao), 100)
+x_tendencia = np.linspace(min(list_selecao)*0.8, max(list_selecao)*1.2, 100)
 plt.plot(x_tendencia, tendencia(x_tendencia), color='green', linestyle='dashed', label='Linha de Tendência Linear')
-plt.semilogx(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
+plt.semilogx(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
 plt.title('Linearização com Linha de Tendência')
 plt.legend()
 plt.xlabel(r'$\log\left(\frac{t_{pH} + \Delta t}{\Delta t}\right)$')
@@ -86,5 +85,5 @@ print('delta_ps', delta_ps)
 
 # cálculo do raio efetivo:
 
-rwa = rw*np.exp(-s)
+rwa = rw*(np.exp(-s))
 print('rwa', rwa)

@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import math as mt
-import pandas as pd
 import scipy.special as sp
 from Gavsteh_func import calculate_gavsteh
 from gringbourdet_deriv import *
@@ -154,3 +152,6 @@ print('Cd', Cd)
 
 s = 0.5 * np.log(1e4/Cd)
 print('s', s)
+
+rwa = rw*(np.exp(-s))
+print('rwa', rwa)

@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import math as mt
-import pandas as pd
 import scipy.special as sp
 from Gavsteh_func import calculate_gavsteh
 
@@ -141,3 +139,10 @@ pd_match = delta_p_match*0.020
 
 k = ((c2_americano*Bo*mi_o*q)/h) * (pd_match/delta_p_match)
 print('k', k)
+
+s = 5
+
+# cálculo do raio efetivo:
+
+rwa = rw*(np.exp(-s))
+print('rwa', rwa)

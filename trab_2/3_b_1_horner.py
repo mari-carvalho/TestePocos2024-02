@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import math as mt
-import pandas as pd
+
 
 tinj = 240 #hrs
 qw = 807 # STB/D
@@ -52,9 +51,9 @@ plt.title(r'Gráfico de $p_{ws}$ vs. $\log\left(\frac{t_{inj} + \Delta t}{\Delta
 plt.legend()
 plt.show()
 
-list_selecao = [3.9031442704095385, 3.7782236267660965, 3.6021685513789974, 3.477265995424853, 3.3803921600570273]
+list_selecao = [ 2.079182681634575, 1.778150894503594, 1.6020631671185683,  1.4771193305583894, 1.3802025709957204]
 print(len(list_selecao))
-pws_selecao = [3397,3362, 3317, 3282, 3257]
+pws_selecao = [3042, 3007, 2982, 2972, 2962]
 print(len(pws_selecao))
 
 # ajustando uma linha de tendência no gráfico semilog:
@@ -63,9 +62,9 @@ coeffs = np.polyfit(list_selecao, pws_selecao, grau)
 coef_angular = coeffs[0]
 print('Coeficiente Angular:', coef_angular)
 tendencia = np.poly1d(coeffs)
-x_tendencia = np.linspace(min(list_selecao), max(list_selecao), 100)
+x_tendencia = np.linspace(min(list_selecao)*0.9, max(list_selecao)*1.8, 100)
 plt.plot(x_tendencia, tendencia(x_tendencia), color='green', linestyle='dashed', label='Linha de Tendência Linear')
-plt.semilogx(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_{inj} + \Delta t}{\Delta t}\right)$')
+plt.semilogx(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_{inj} + \Delta t}{\Delta t}\right)$')
 plt.title('Linearização com Linha de Tendência')
 plt.legend()
 plt.xlabel(r'$\log\left(\frac{t_{inj} + \Delta t}{\Delta t}\right)$')
@@ -96,7 +95,7 @@ print('delta_ps', delta_ps)
 
 # cálculo do raio efetivo:
 
-rwa = rw*np.exp(-s)
+rwa = rw*(np.exp(-s))
 print('rwa', rwa)
 
 

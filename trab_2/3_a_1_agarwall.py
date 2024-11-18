@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import math as mt
-import pandas as pd
+
 
 # informações da formação:
 
@@ -108,9 +107,9 @@ coeffs = np.polyfit(list_selecao, pws_selecao, grau)
 coef_angular = coeffs[0]
 print('Coeficiente Angular:', coef_angular)
 tendencia = np.poly1d(coeffs)
-x_tendencia = np.linspace(min(list_selecao), max(list_selecao), 100)
+x_tendencia = np.linspace(min(list_selecao)*0.001, max(list_selecao)*1.2, 100)
 plt.plot(x_tendencia, tendencia(x_tendencia), color='green', linestyle='dashed', label='Linha de Tendência Linear')
-plt.plot(list_selecao, pws_selecao, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_p \cdot \Delta t}{t_p + \Delta t}\right)$')
+plt.plot(list_log_eixo_x, pws, marker='o', linestyle='', color='#D8A7FF', label=r'$p_{ws}$ vs. $\log\left(\frac{t_p \cdot \Delta t}{t_p + \Delta t}\right)$')
 plt.xscale('symlog', linthresh=1)
 plt.title('Linearização com Linha de Tendência')
 plt.legend()
