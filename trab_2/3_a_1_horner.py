@@ -125,7 +125,7 @@ for i in range(len(delta_t)):
         p1 = pws[i]
     else:
         pass
-
+print('p1', p1)
 s = 1.151*(((p1-pwf)/coef_angular) - (np.log10((k)/(phi*mi_o*ct*(rw**2)))) + 3.23)
 print('s', s)
 
